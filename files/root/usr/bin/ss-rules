@@ -117,6 +117,8 @@ gen_lan_host_output_acl() {
 				$ipt -I SS_SPEC_WAN_DG -m mark --mark $src_mark_fw -j SS_SPEC_WAN_FW
 				;;
 			n|N)
+				src_mark_ac=`echo ${host:2} | awk -F "." '{printf ("0x%02x", $1)} {printf ("%02x", $2)} {printf ("%02x", $3)} {printf ("%02x\n", $4)}'`
+				$ipt -I SS_SPEC_WAN_DG -m mark --mark $src_mark_fw -j SS_SPEC_WAN_AC
 				;;
 		esac
 	done
